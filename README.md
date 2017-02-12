@@ -1,17 +1,12 @@
-# NativeScript Application Template
+# Remote Linux Mobile Client
 
 App required nodejs and yarn.
 
-## Setup
-
-### Install node_modules
-```sh
-yarn install
-```
 
 ### Start develop
 ```sh
 yarn run build
+# or
 yarn run livesync
 ```
 
