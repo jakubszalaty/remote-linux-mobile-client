@@ -1,0 +1,29 @@
+<ActionBar title="Home"> </ActionBar>
+
+<!--<StackLayout class="p-20">
+
+</StackLayout>-->
+
+
+<side-drawer-page>
+    <TabView [(ngModel)]="tabSelectedIndex" selectedColor="#FF00FF">
+        <StackLayout *tabItem="{title: 'Profile'}">
+            <Button text="Connect" (tap)="connect()" class="btn btn-primary btn-active"></Button>
+            <Button text="Disconnect" (tap)="disconnect()" class="btn btn-primary btn-active"></Button>
+            <Button text="Get" (tap)="getCommandsList()" class="btn btn-primary btn-active"></Button>
+
+
+            <ListView [items]="commandsList" class="small-spacing">
+                <template let-item="item">
+                    <Button [text]="item" (tap)="sendCommand(item)" class="btn btn-primary btn-active"></Button>
+                </template>
+            </ListView>
+        </StackLayout>
+        <StackLayout *tabItem="{title: 'Stats'}">
+            <Label text="Second tab item"></Label>
+        </StackLayout>
+        <StackLayout *tabItem="{title: 'Settings'}">
+            <Label text="Third tab item"></Label>
+        </StackLayout>
+    </TabView>
+</side-drawer-page>
