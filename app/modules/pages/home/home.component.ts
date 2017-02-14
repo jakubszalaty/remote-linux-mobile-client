@@ -19,28 +19,22 @@ export class HomeComponent {
     // public items: Array<DataItem>
     public tabSelectedIndex: number
 
+    public ipAddress: string = '192.168.0.2'
+
     constructor(private router: Router, private socket: SocketService) {
         this.tabSelectedIndex = 2
-        // this.items = new Array<DataItem>()
-        // for (let i = 0; i < 5; i++) {
-        //     this.items.push(new DataItem("item " + i))
-        // }
-
     }
 
-    public get ipAddress(): string {
-        return this.socket.ipAddress
-    }
-    public set ipAddress(string){
-        this.socket.ipAddress = string
+    public get serversIps(): Array<string> {
+        return this.socket.serversIps
     }
 
     public get commandsList(): Array<string> {
         return this.socket.commandsList
     }
 
-    public connect() {
-        this.socket.connect().then(()=>{
+    public connect(ipAddress: string) {
+        this.socket.connect(ipAddress).then(()=>{
             // this.tabSelectedIndex = 0
             alert('Connected')
         }).catch(err=>{
@@ -50,6 +44,9 @@ export class HomeComponent {
     }
     public disconnect() {
         this.socket.disconnect()
+    }
+    public search() {
+        this.socket.search()
     }
     // public getCommandsList() {
     //     this.socket.getCommandsList()

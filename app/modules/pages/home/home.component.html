@@ -19,13 +19,26 @@
 
     <StackLayout class="slide" *tabItem="{title: 'Settings'}">
 
+        <Label text="Find server" class="h2"></Label>
+
+        <Button text="Search" (tap)="search()" class="btn btn-primary btn-active"></Button>
+        <Button text="Disconnect" (tap)="disconnect()" class="btn btn-primary btn-active"></Button>
+
+        <Label text="Servers found" class="h2"></Label>
+        <ListView [items]="serversIps" class="small-spacing">
+            <template let-item="item">
+                <Button [text]="item" (tap)="connect(item)" class="btn btn-primary btn-active"></Button>
+            </template>
+        </ListView>
+
+
+        <!--<Label text="Manual" class="h2"></Label>
         <StackLayout class="input-field">
             <Label class="label" text="IP address" row="1" col="0" textWrap="true"></Label>
             <TextField class="input input-border" id="ipAddress" hint="IP address" [(ngModel)]="ipAddress" row="1" col="1"></TextField>
         </StackLayout>
 
-        <Button text="Connect" (tap)="connect()" class="btn btn-primary btn-active"></Button>
-        <Button text="Disconnect" (tap)="disconnect()" class="btn btn-primary btn-active"></Button>
+        <Button text="Connect" (tap)="connect(ipAddress)" class="btn btn-primary btn-active"></Button>-->
 
 
     </StackLayout>
