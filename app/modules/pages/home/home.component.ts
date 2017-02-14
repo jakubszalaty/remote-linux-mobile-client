@@ -20,7 +20,7 @@ export class HomeComponent {
     public tabSelectedIndex: number
 
     constructor(private router: Router, private socket: SocketService) {
-        this.tabSelectedIndex = 1
+        this.tabSelectedIndex = 2
         // this.items = new Array<DataItem>()
         // for (let i = 0; i < 5; i++) {
         //     this.items.push(new DataItem("item " + i))
@@ -28,20 +28,32 @@ export class HomeComponent {
 
     }
 
+    public get ipAddress(): string {
+        return this.socket.ipAddress
+    }
+    public set ipAddress(string){
+        this.socket.ipAddress = string
+    }
+
     public get commandsList(): Array<string> {
         return this.socket.commandsList
     }
 
     public connect() {
-        this.socket.connect()
+        this.socket.connect().then(()=>{
+            // this.tabSelectedIndex = 0
+            alert('Connected')
+        }).catch(err=>{
+            alert(err)
+        })
         // this.router.navigate(["/about"])
     }
     public disconnect() {
         this.socket.disconnect()
     }
-    public getCommandsList() {
-        this.socket.getCommandsList()
-    }
+    // public getCommandsList() {
+    //     this.socket.getCommandsList()
+    // }
     public sendCommand(command: string) {
         this.socket.sendCommand(command)
     }

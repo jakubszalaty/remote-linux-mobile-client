@@ -1,29 +1,32 @@
-<ActionBar title="Home"> </ActionBar>
-
-<!--<StackLayout class="p-20">
-
-</StackLayout>-->
+<ActionBar title="Remote Linux" class="action-bar"></ActionBar>
 
 
-<side-drawer-page>
-    <TabView [(ngModel)]="tabSelectedIndex" selectedColor="#FF00FF">
-        <StackLayout *tabItem="{title: 'Profile'}">
-            <Button text="Connect" (tap)="connect()" class="btn btn-primary btn-active"></Button>
-            <Button text="Disconnect" (tap)="disconnect()" class="btn btn-primary btn-active"></Button>
-            <Button text="Get" (tap)="getCommandsList()" class="btn btn-primary btn-active"></Button>
+<TabView [(ngModel)]="tabSelectedIndex" class="tab-view">
+    <StackLayout class="slide" *tabItem="{title: 'Commands'}">
+        <Label text="Commands list" class="h2"></Label>
 
+        <ListView [items]="commandsList" class="small-spacing">
+            <template let-item="item">
+                <Button [text]="item" (tap)="sendCommand(item)" class="btn btn-primary btn-active"></Button>
+            </template>
+        </ListView>
 
-            <ListView [items]="commandsList" class="small-spacing">
-                <template let-item="item">
-                    <Button [text]="item" (tap)="sendCommand(item)" class="btn btn-primary btn-active"></Button>
-                </template>
-            </ListView>
+    </StackLayout>
+
+    <StackLayout class="slide" *tabItem="{title: 'Stats'}">
+        <Label text="Second tab item"></Label>
+    </StackLayout>
+
+    <StackLayout class="slide" *tabItem="{title: 'Settings'}">
+
+        <StackLayout class="input-field">
+            <Label class="label" text="IP address" row="1" col="0" textWrap="true"></Label>
+            <TextField class="input input-border" id="ipAddress" hint="IP address" [(ngModel)]="ipAddress" row="1" col="1"></TextField>
         </StackLayout>
-        <StackLayout *tabItem="{title: 'Stats'}">
-            <Label text="Second tab item"></Label>
-        </StackLayout>
-        <StackLayout *tabItem="{title: 'Settings'}">
-            <Label text="Third tab item"></Label>
-        </StackLayout>
-    </TabView>
-</side-drawer-page>
+
+        <Button text="Connect" (tap)="connect()" class="btn btn-primary btn-active"></Button>
+        <Button text="Disconnect" (tap)="disconnect()" class="btn btn-primary btn-active"></Button>
+
+
+    </StackLayout>
+</TabView>
