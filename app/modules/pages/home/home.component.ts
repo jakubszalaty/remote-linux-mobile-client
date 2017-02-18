@@ -35,7 +35,7 @@ export class HomeComponent {
     }
 
     public get spotifyInfo(): Object {
-        console.log('getSpotifyInfo')
+        // console.log('getSpotifyInfo')
         return this.socket.spotifyInfo
     }
 

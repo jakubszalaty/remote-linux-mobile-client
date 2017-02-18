@@ -4,6 +4,7 @@ import { NativeScriptModule } from 'nativescript-angular/platform'
 import { SIDEDRAWER_DIRECTIVES } from 'nativescript-telerik-ui/sidedrawer/angular'
 
 import { SideDrawerPageComponent } from './side-drawer-page'
+import { TimerPipe } from './timer/timer.pipe'
 import { BorderlessBtnDirective } from './borderless-btn.directive'
 
 @NgModule({
@@ -13,11 +14,13 @@ import { BorderlessBtnDirective } from './borderless-btn.directive'
   declarations: [
     SIDEDRAWER_DIRECTIVES,
     SideDrawerPageComponent,
-    BorderlessBtnDirective
+    BorderlessBtnDirective,
+    TimerPipe
   ],
   exports: [
     SideDrawerPageComponent,
-    BorderlessBtnDirective
+    BorderlessBtnDirective,
+    TimerPipe
   ]
 })
 export class SharedModule {
