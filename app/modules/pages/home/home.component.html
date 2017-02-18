@@ -5,7 +5,7 @@
     <StackLayout class="slide" *tabItem="{title: 'Commands'}">
         <Label text="Commands list" class="h2"></Label>
 
-        <ListView [items]="commandsList" class="small-spacing">
+        <ListView [items]="commandsList">
             <template let-item="item">
                 <Button [text]="item" (tap)="sendCommand(item)" class="btn btn-primary btn-active"></Button>
             </template>
@@ -25,7 +25,9 @@
         <Button text="Disconnect" (tap)="disconnect()" class="btn btn-primary btn-active"></Button>
 
         <Label text="Servers found" class="h2"></Label>
-        <ListView [items]="serversIps" class="small-spacing">
+
+
+        <ListView [items]="serversIps">
             <template let-item="item">
                 <Button [text]="item" (tap)="connect(item)" class="btn btn-primary btn-active"></Button>
             </template>

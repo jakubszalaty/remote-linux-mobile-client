@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core'
 
 import * as application from 'application'
 
+import { ObservableArray } from 'data/observable-array'
+
 declare var android: any
 
 const SocketIO = require('nativescript-socketio').SocketIO
@@ -10,11 +12,12 @@ export class SocketService {
     private socket
     private connected: Boolean = false
 
-    public commandsList: Array<string> = null
+    public commandsList: ObservableArray<string>
 
-    public serversIps: Array<string> = null
+    public serversIps: ObservableArray<string>
     private broadcastAddress: Array<number> = null
     private port: number = 1337
+
     constructor() {
         // this.socket = new SocketIO('http://192.168.0.2:1337',{'connect timeout': 2000})
         // this.socket = new SocketIO(`http://${ipAddress}`,{'connect timeout': 2000})
@@ -33,8 +36,8 @@ export class SocketService {
         }
     }
 
-    search() {
-        this.serversIps = []
+    public search() {
+        this.serversIps = new ObservableArray([])
         for (let i = 2; i < this.broadcastAddress[3]; i++){
 
             const address = `${this.broadcastAddress[0]}.${this.broadcastAddress[1]}.${this.broadcastAddress[2]}.${i}`
@@ -51,7 +54,7 @@ export class SocketService {
             socket.connect()
         }
     }
-    connect(serverIpAddress:string) {
+    public connect(serverIpAddress:string) {
         return new Promise((resolve,reject)=>{
 
             this.socket = new SocketIO(`http://${serverIpAddress}:${this.port}`, { 'connect timeout': 2000 })
@@ -74,13 +77,18 @@ export class SocketService {
 
             // this.socket.on('test_connection', (response)=>{ alert(response.data) })
 
-            this.socket.on('commands_list', (response)=>{ this.commandsList = response.data })
+            this.socket.on('commands_list', (response)=>{
+                this.commandsList = new ObservableArray(response.data)
+            })
 
             this.socket.connect()
         })
     }
 
-    disconnect() { this.socket.disconnect() }
+    public disconnect() {
+        if (this.socket)
+            this.socket.disconnect()
+    }
 
     private getIpFromInt(int: number) {
         const part1 = int & 255

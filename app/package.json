@@ -1,14 +1,14 @@
 {
   "main": "main.js",
-  "name": "ns-template",
+  "name": "remote-linux-mobile",
   "version": "0.0.1",
-  "description": "NativeScript Application Template",
+  "description": "Mobile client for remote linux",
   "author": "Jakub Szalaty (jakub.szalaty@gmail.com)",
-  "repository": "git+https://github.com/nnaisur/ns-template.git",
+  "repository": "git+https://github.com/nnaisur/remote-linux-mobile-client.git",
   "bugs": {
-    "url": "https://github.com/nnaisur/ns-template/issues"
+    "url": "https://github.com/nnaisur/remote-linux-mobile-client/issues"
   },
-  "homepage": "https://github.com/nnaisur/ns-template#readme",
+  "homepage": "https://github.com/nnaisur/remote-linux-mobile-client#readme",
   "dependencies": {
     "@angular/common": "2.4.3",
     "@angular/compiler": "2.4.3",

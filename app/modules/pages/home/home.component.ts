@@ -3,6 +3,7 @@ import { Router } from '@angular/router'
 
 import { SocketService } from '../../shared/socket/socket.service'
 
+import { ObservableArray } from 'data/observable-array'
 
 @Component({
     selector: 'home',
@@ -11,9 +12,6 @@ import { SocketService } from '../../shared/socket/socket.service'
     providers: [ SocketService ]
 })
 
-// export class DataItem {
-//     constructor(public itemDesc: string) { }
-// }
 
 export class HomeComponent {
     // public items: Array<DataItem>
@@ -25,11 +23,11 @@ export class HomeComponent {
         this.tabSelectedIndex = 2
     }
 
-    public get serversIps(): Array<string> {
+    public get serversIps(): ObservableArray<string> {
         return this.socket.serversIps
     }
 
-    public get commandsList(): Array<string> {
+    public get commandsList(): ObservableArray<string> {
         return this.socket.commandsList
     }
 
