@@ -3,7 +3,13 @@ import { platformNativeScriptDynamic } from 'nativescript-angular/platform'
 
 import { AppModule } from './modules/app.module'
 
-// import * as application from 'application'
+import * as application from 'application'
+// webimage
+import {initializeOnAngular} from "nativescript-web-image-cache"
+application.on(application.launchEvent, function (args: application.ApplicationEventData) {
+    initializeOnAngular();
+})
+
 // declare var android: any
 
 // application.android.on(application.AndroidApplication.activityResumedEvent, function (args) {

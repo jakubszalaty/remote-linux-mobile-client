@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, NgZone } from '@angular/core'
 
 import * as application from 'application'
 
@@ -14,13 +14,16 @@ export class SocketService {
 
     public commandsList: ObservableArray<string>
 
+    public spotifyInfo: Object
+
     public serversIps: ObservableArray<string>
     private broadcastAddress: Array<number> = null
     private port: number = 1337
 
-    constructor() {
+    constructor(private _ngZone: NgZone) {
         // this.socket = new SocketIO('http://192.168.0.2:1337',{'connect timeout': 2000})
         // this.socket = new SocketIO(`http://${ipAddress}`,{'connect timeout': 2000})
+
         if (application.android) {
             // console.dump(app.android)
             const context = android.content.Context
@@ -51,6 +54,7 @@ export class SocketService {
 
             })
         }
+
     }
 
     public search() {
@@ -101,6 +105,14 @@ export class SocketService {
 
             this.socket.on('commands_list', (response) => {
                 this.commandsList = new ObservableArray(response.data)
+            })
+
+            this.socket.on('spotifyInfo', (response) => {
+                console.log('getting')
+                this._ngZone.run(() => {
+                    // console.log('ngZone')
+                    this.spotifyInfo = response
+                })
             })
 
             this.socket.connect()

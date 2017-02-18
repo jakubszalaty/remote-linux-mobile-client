@@ -22,8 +22,27 @@
         </StackLayout>
         <!--<Button text="Open" (tap)="openUrl()" class="btn btn-primary btn-active"></Button>-->-->
     </StackLayout>
+    <StackLayout class="slide" *tabItem="{title: 'Spotify'}">
+
+        <GridLayout rows='150' columns='*'>
+            <!--<WebImage style="width:150;"  stretch="fill" src="https://open.spotify.com/image/d9aaa3f7a57299981173fe151d4a0e989ed4292e"></WebImage>-->
+            <WebImage style="width:150; background-color:#DDDDDD;" stretch="fill" [src]="spotifyInfo && spotifyInfo['mpris:artUrl']!=='' ? spotifyInfo['mpris:artUrl'] : tmpImage"></WebImage>
+        </GridLayout>
+
+        <Label class="label" [text]="spotifyInfo ? spotifyInfo['xesam:title'] : 'Title'" row="1" col="0" textWrap="true"></Label>
+        <Label class="label" [text]="spotifyInfo ? spotifyInfo['mpris:length'] : '0'" row="1" col="0" textWrap="true"></Label>
+
+        <Button text="spotify" (tap)="sendCommand('spotify')" class="btn btn-primary btn-active"></Button>
+        <Button text="spotifyPlayPause" (tap)="sendCommand('spotifyPlayPause')" class="btn btn-primary btn-active"></Button>
+        <Button text="spotifyNext" (tap)="sendCommand('spotifyNext')" class="btn btn-primary btn-active"></Button>
+        <Button text="spotifyPrevious" (tap)="sendCommand('spotifyPrevious')" class="btn btn-primary btn-active"></Button>
+        <Button text="spotifyClose" (tap)="sendCommand('spotifyClose')" class="btn btn-primary btn-active"></Button>
+
+
+    </StackLayout>
 
     <StackLayout class="slide" *tabItem="{title: 'Settings'}">
+
 
         <Label text="Find server" class="h2"></Label>
 
@@ -32,13 +51,12 @@
 
         <Label text="Servers found" class="h2"></Label>
 
-
         <ListView [items]="serversIps">
             <template let-item="item">
                 <Button [text]="item" (tap)="connect(item)" class="btn btn-primary btn-active"></Button>
             </template>
         </ListView>
-        <!--<ActivityIndicator [busy]="isLoadingServers" [visibility]="isLoadingServers ? 'visible' : 'collapse'"></ActivityIndicator>-->
+        <ActivityIndicator [busy]="isLoadingServers" [visibility]="isLoadingServers ? 'visible' : 'collapse'"></ActivityIndicator>
 
 
         <!--<Label text="Manual" class="h2"></Label>
