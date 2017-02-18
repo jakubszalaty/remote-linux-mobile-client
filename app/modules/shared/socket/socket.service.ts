@@ -26,50 +26,72 @@ export class SocketService {
             const context = android.content.Context
             const wifiManager = application.android.context.getSystemService(context.WIFI_SERVICE)
             const dInfo = wifiManager.getDhcpInfo()
-            this.broadcastAddress = this.getIpFromInt( (dInfo.ipAddress & dInfo.netmask) | ~dInfo.netmask )
+            this.broadcastAddress = this.getIpFromInt((dInfo.ipAddress & dInfo.netmask) | ~dInfo.netmask)
             // console.log(this.getStringIpFromInt( (dInfo.ipAddress & dInfo.netmask) | ~dInfo.netmask) )
             // console.log(this.getIpFromInt(dInfo.gateway))
             // console.log(this.getIpFromInt(dInfo.netmask))
             // console.log(this.getIpFromInt(dInfo.serverAddress))
             // console.log(this.getIpFromInt(dInfo.ipAddress))
             // this.search()
+            application.android.on(application.AndroidApplication.activityResumedEvent, (args) => {
+                // console.log("Event: " + args.eventName + ", Activity: " + args.activity)
+                const a = args.activity
+                const Intent_1 = android.content.Intent
+                const actionSend = Intent_1.ACTION_SEND
+                const actionSendMultiple = Intent_1.ACTION_SEND_MULTIPLE
+                const argIntent = a.getIntent()
+                const argIntentAction = argIntent.getAction()
+                const argIntentType = argIntent.getType()
+
+                // console.log(" ~~~~ Intent is ~~~~ :" + argIntentAction)
+                if (argIntentType == 'text/plain'){
+                    const url: string = argIntent.getStringExtra(Intent_1.EXTRA_TEXT)
+                    this.sendCommand('openUrl', { url: url })
+                }
+
+            })
         }
     }
 
     public search() {
         this.serversIps = new ObservableArray([])
-        for (let i = 2; i < this.broadcastAddress[3]; i++){
+        const promises: Promise<any>[] = []
 
-            const address = `${this.broadcastAddress[0]}.${this.broadcastAddress[1]}.${this.broadcastAddress[2]}.${i}`
-            const socket = new SocketIO(`http://${address}:${this.port}`, { 'connect timeout': 2000 })
-            socket.on('connect_error', () => {
-                // console.log('Error:', `http://${address}:${this.port}`)
-                socket.disconnect()
-            })
-            socket.on('connect', () => {
-                console.log('OK:', `http://${address}:${this.port}`)
-                this.serversIps.push(address)
-                socket.disconnect()
-            })
-            socket.connect()
+        for (let i = 2; i < this.broadcastAddress[3]; i++) {
+            promises.push(new Promise((resolve, reject) => {
+                const address = `${this.broadcastAddress[0]}.${this.broadcastAddress[1]}.${this.broadcastAddress[2]}.${i}`
+                const socket = new SocketIO(`http://${address}:${this.port}`, { 'connect timeout': 2000 })
+                socket.on('connect_error', () => {
+                    socket.disconnect()
+                    return resolve()
+                })
+                socket.on('connect', () => {
+                    console.log('OK:', `http://${address}:${this.port}`)
+                    this.serversIps.push(address)
+                    socket.disconnect()
+                    return resolve()
+                })
+                socket.connect()
+            }))
         }
+        return Promise.all(promises)
     }
-    public connect(serverIpAddress:string) {
-        return new Promise((resolve,reject)=>{
+    public connect(serverIpAddress: string) {
+        return new Promise((resolve, reject) => {
 
             this.socket = new SocketIO(`http://${serverIpAddress}:${this.port}`, { 'connect timeout': 2000 })
 
-            this.socket.on('connect_error', ()=>{
+            this.socket.on('connect_error', () => {
                 this.connected = false
                 this.socket.disconnect()
                 return reject('connect_error')
             })
-            this.socket.on('connect', ()=>{
+            this.socket.on('connect', () => {
                 this.connected = true
                 this.commandsList = null
                 return resolve(this.getCommandsList())
             })
-            this.socket.on('disconnect', ()=>{
+            this.socket.on('disconnect', () => {
                 console.log('disconnect')
                 this.connected = false
                 this.commandsList = null
@@ -77,7 +99,7 @@ export class SocketService {
 
             // this.socket.on('test_connection', (response)=>{ alert(response.data) })
 
-            this.socket.on('commands_list', (response)=>{
+            this.socket.on('commands_list', (response) => {
                 this.commandsList = new ObservableArray(response.data)
             })
 
@@ -96,7 +118,7 @@ export class SocketService {
         const part3 = ((int >> 16) & 255)
         const part4 = ((int >> 24) & 255)
         // return part1 + '.' + part2 + '.' + part3 + '.' + part4
-        return [part1,part2,part3,part4]
+        return [part1, part2, part3, part4]
     }
 
     private getStringIpFromInt(int: number) { return this.getIpFromInt(int).join('.') }
@@ -110,10 +132,10 @@ export class SocketService {
         })
     }
 
-    public sendCommand(command: string){
+    public sendCommand(command: string, data?: Object) {
         return new Promise((resolve, reject) => {
             if (this.connected)
-                return resolve(this.socket.emit(command))
+                return resolve(this.socket.emit(command, data))
 
             else
                 return reject('Not connected')
@@ -122,3 +144,4 @@ export class SocketService {
     }
 
 }
+

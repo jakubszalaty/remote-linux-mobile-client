@@ -14,7 +14,13 @@
     </StackLayout>
 
     <StackLayout class="slide" *tabItem="{title: 'Stats'}">
-        <Label text="Second tab item"></Label>
+
+        <StackLayout class="input-field">
+            <Label class="label" text="Open in chrome" row="1" col="0" textWrap="true"></Label>
+            <TextField class="input input-border" hint="url address" [(ngModel)]="urlAddress" row="1" col="1" autocapitalizationType="none"
+                autocorrect="false" verticalAlignment="center" (returnPress)="openUrl()" returnKeyType="Open"></TextField>
+        </StackLayout>
+        <!--<Button text="Open" (tap)="openUrl()" class="btn btn-primary btn-active"></Button>-->-->
     </StackLayout>
 
     <StackLayout class="slide" *tabItem="{title: 'Settings'}">
@@ -32,6 +38,7 @@
                 <Button [text]="item" (tap)="connect(item)" class="btn btn-primary btn-active"></Button>
             </template>
         </ListView>
+        <!--<ActivityIndicator [busy]="isLoadingServers" [visibility]="isLoadingServers ? 'visible' : 'collapse'"></ActivityIndicator>-->
 
 
         <!--<Label text="Manual" class="h2"></Label>
