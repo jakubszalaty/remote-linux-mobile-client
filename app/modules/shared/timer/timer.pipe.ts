@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core'
 /*
  * Raise the value exponentially
  * Takes an exponent argument that defaults to 1.
@@ -11,10 +11,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'timer' })
 export class TimerPipe implements PipeTransform {
     transform(length: number): string {
-        const s: number = length/1000000
+        const s: number = length / 1000000
 
-        let minutes: string = String(Math.floor(s/60))
-        let seconds: string = String(Math.floor(s%60))
+        const minutes: string = String(Math.floor(s / 60))
+        let seconds: string = String(Math.floor(s % 60))
 
         if ((s % 60) < 10) seconds = `0${seconds}`
         return `${minutes}:${seconds}`

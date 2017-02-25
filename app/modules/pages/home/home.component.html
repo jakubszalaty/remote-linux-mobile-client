@@ -15,12 +15,14 @@
 
     <StackLayout class="slide" *tabItem="{title: 'Stats'}">
 
+        <!--<Button text="Open" (tap)="openUrl()" class="btn btn-primary btn-active"></Button>-->-->
+        <Image style="width:100%; height:250; background-color:#DDDDDD;" stretch="fill" [src]="shotImage ? shotImage : ''"></Image>
+        <Button text="getShot" (tap)="sendCommand('getShot')" class="btn btn-primary btn-active"></Button>
         <StackLayout class="input-field">
             <Label class="label" text="Open in chrome" row="1" col="0" textWrap="true"></Label>
             <TextField class="input input-border" hint="url address" [(ngModel)]="urlAddress" row="1" col="1" autocapitalizationType="none"
                 autocorrect="false" verticalAlignment="center" (returnPress)="openUrl()" returnKeyType="Open"></TextField>
         </StackLayout>
-        <!--<Button text="Open" (tap)="openUrl()" class="btn btn-primary btn-active"></Button>-->-->
     </StackLayout>
     <StackLayout class="slide" *tabItem="{title: 'Spotify'}">
 

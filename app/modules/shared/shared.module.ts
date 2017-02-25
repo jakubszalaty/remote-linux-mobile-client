@@ -15,13 +15,13 @@ import { BorderlessBtnDirective } from './borderless-btn.directive'
     SIDEDRAWER_DIRECTIVES,
     SideDrawerPageComponent,
     BorderlessBtnDirective,
-    TimerPipe
+    TimerPipe,
   ],
   exports: [
     SideDrawerPageComponent,
     BorderlessBtnDirective,
-    TimerPipe
-  ]
+    TimerPipe,
+  ],
 })
 export class SharedModule {
 

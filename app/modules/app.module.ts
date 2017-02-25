@@ -15,12 +15,12 @@ import { routes, navigatableComponents } from './app.routing'
     // NativeScriptHttpModule,
     NativeScriptRouterModule,
     NativeScriptRouterModule.forRoot(routes),
-    SharedModule
+    SharedModule,
   ],
   declarations: [
     AppComponent,
-    ...navigatableComponents
+    ...navigatableComponents,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

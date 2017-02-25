@@ -18,18 +18,25 @@ export class HomeComponent {
     // public items: Array<DataItem>
     public tabSelectedIndex: number
 
-    public ipAddress: string = '192.168.0.2'
+    public ipAddress: string
 
-    public tmpImage: string = 'http://vignette4.wikia.nocookie.net/nocopyrightsounds/images/f/fe/Spotify-icon.jpg/revision/latest/scale-to-width-down/480?cb=20151216175322'
+    public tmpImage: string
 
-    public isLoadingServers: boolean = false
+    public isLoadingServers: boolean
 
     public urlAddress: string
 
-    constructor(private router: Router, private socket: SocketService, private _ngZone: NgZone) {
+    constructor(private router: Router, private socket: SocketService, private ngZone: NgZone) {
+        this.isLoadingServers = false
         this.tabSelectedIndex = 3
+        // tslint:disable-next-line:max-line-length
+        this.tmpImage = 'http://vignette4.wikia.nocookie.net/nocopyrightsounds/images/f/fe/Spotify-icon.jpg/revision/latest/scale-to-width-down/480?cb=20151216175322'
+        this.ipAddress = '192.168.0.2'
     }
 
+    public get shotImage(): string {
+        return this.socket.shotImage
+    }
     public get serversIps(): ObservableArray<string> {
         return this.socket.serversIps
     }
